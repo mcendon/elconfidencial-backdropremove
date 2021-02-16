@@ -1,22 +1,27 @@
 (function removeBackdrop() {
-  let dialog = document.getElementsByTagName("ec-dialog") || document.getElementsByClassName('tp-modal-open');
+  let modal = document.getElementsByClassName('tp-modal-open');
+  let dialog = document.getElementsByTagName('ec-dialog');
   
+  if (modal.length == 0) {
+    setTimeout(removeBackdrop, 100);
+  } else {
+    document.getElementsByClassName('tp-modal-open')[0].classList.remove('tp-modal-open');
+    document.getElementsByClassName('tp-modal')[0].remove();
+    document.getElementsByClassName('tp-backdrop')[0].remove();
+  }
+
   if (dialog.length == 0) {
     setTimeout(removeBackdrop, 100);
-    return;
+  } else {
+    document.getElementsByTagName('ec-dialog').item(0).remove();
   }
-  
-  if (document.getElementsByClassName('tp-modal-open').length > 0)
-    document.getElementsByClassName('tp-modal-open')[0].classList.remove('tp-modal-open');
-  
-  if (document.getElementsByClassName('tp-modal').length > 0)
-    document.getElementsByClassName('tp-modal')[0].remove();
-  
-  if (document.getElementsByClassName('tp-backdrop').length > 0)
-    document.getElementsByClassName('tp-backdrop')[0].remove();
-  
-  if (document.getElementsByTagName("ec-dialog").length > 0)
-    document.getElementsByTagName("ec-dialog").item(0).remove();
-  
-  document.getElementsByTagName("body")[0].style.overflowY = "visible";
+})();
+
+(function restoreScroll() {
+  let body = document.getElementsByTagName('body')[0];
+  if (body.length == 0) {
+    setTimeout(restoreScroll, 100);
+  } else {
+    body.style.overflowY = 'visible'
+  }
 })();
